@@ -7,13 +7,15 @@ test('render one row per user', async () => {
         {name: "Jeevan", email: "jeevan@gmail.com"},
         {name: "jain", email: "jain@email.com"},
     ];
-    render(<UserList users={users}/>);
+    const { container }  = render(<UserList users={users}/>);
 
     // screen.logTestingPlaygroundURL();
 
-    const rowByTestId = screen.getByTestId("users");
+    // const rowByTestId = screen.getByTestId("users");
 
-    const rows = within(rowByTestId).getAllByRole("row");
+    // const rows = within(rowByTestId).getAllByRole("row");
+
+    const rows = container.querySelectorAll('tbody tr');
 
     expect(rows).toHaveLength(2);
 
