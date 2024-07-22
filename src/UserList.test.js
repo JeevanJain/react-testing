@@ -1,13 +1,22 @@
 import UserList from './UserList';
 import { render, screen, within } from "@testing-library/react"
-import userEvent from "@testing-library/user-event";
 
-test('render one row per user', async () => {
+function renderComponent() {
     const users = [
         {name: "Jeevan", email: "jeevan@gmail.com"},
         {name: "jain", email: "jain@email.com"},
     ];
-    const { container }  = render(<UserList users={users}/>);
+
+    const { container } = render(<UserList users={users}/>);
+
+    return {
+        container, users
+    }
+}
+
+test('render one row per user', async () => {
+    
+    const { container }  = renderComponent();
 
     // screen.logTestingPlaygroundURL();
 
@@ -23,11 +32,7 @@ test('render one row per user', async () => {
 
 test('render the email and name of each user', async () => {
 
-    const users = [
-        {name: "Jeevan", email: "jeevan@gmail.com"},
-        {name: "jain", email: "jain@email.com"},
-    ];
-    render(<UserList users={users}/>);
+    const { users }  = renderComponent();
 
     for(let user of users) {
         const name = screen.getByRole('cell', { name : user.name })
