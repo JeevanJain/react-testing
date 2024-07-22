@@ -33,11 +33,6 @@ test('it calls onUserAdd when form is. submitted', async () => {
     await user.keyboard("jeevantj@altimetrik.com");
 
     const btn = screen.getByRole('button');
-
-    
-
-    
-
     await user.click(btn);
 
     expect(mock).toHaveBeenCalled();
@@ -46,4 +41,24 @@ test('it calls onUserAdd when form is. submitted', async () => {
     // expect(argList).toHaveLength(1);
     // expect(argList[0][0]).toEqual({name: "jeevan", email: "jeevantj@altimetrik.com" });
 
-})
+});
+
+test('empties input fields when form submitted', async () =>{
+    const user = userEvent.setup();
+    render(<UserForm onUserAdd={() => {}} />);
+
+    const nameInput = screen.getByRole('textbox', { name: /name/i });
+    const emailInput = screen.getByRole('textbox', { name: /email/i });
+
+    await user.click(nameInput);
+    await user.keyboard("jeevan");
+
+    await user.click(emailInput);
+    await user.keyboard("jeevantj@altimetrik.com");
+
+    const btn = screen.getByRole('button');
+    await user.click(btn);
+
+    expect(nameInput).toHaveValue("");
+    expect(emailInput).toHaveValue("");
+});
